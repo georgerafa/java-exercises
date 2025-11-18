@@ -1,0 +1,111 @@
+public class Queue {
+
+    private long[] queueArray;
+    private int front;
+    private int rear;
+    private int maxSize;
+    private int nItems;
+
+    public Queue(int maxSize) {
+        this.maxSize = maxSize;
+        this.queueArray = new long[maxSize];
+        this.front = 0;
+        this.rear = -1;
+        this.nItems = 0;
+    }
+
+    public void insert(long value) {
+        if (isFull()) {
+            System.out.println("Queue is full.");
+            return;
+        }
+        if (rear == maxSize - 1) {
+            rear = -1;                 
+        }
+        queueArray[++rear] = value;    
+        nItems++;
+    }
+
+    
+    public long remove() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty.");
+            return -1;
+        }
+        long temp = queueArray[front++];
+
+        if (front == maxSize) {
+            front = 0;                 
+        }
+
+        nItems--;
+        return temp;
+    }
+
+    
+    public long peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty.");
+            return -1;
+        }
+        return queueArray[front];
+    }
+
+ 
+    public boolean isEmpty() {
+        return nItems == 0;
+    }
+
+    
+    public boolean isFull() {
+        return nItems == maxSize;
+    }
+
+
+    public int size() {
+        return nItems;
+    }
+
+    
+    public void printQueue() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty.");
+            return;
+        }
+
+        int count = nItems;
+        int index = front;
+
+        while (count > 0) {
+            System.out.print(queueArray[index] + " ");
+            index++;
+            if (index == maxSize) index = 0;
+            count--;
+        }
+        System.out.println();
+    }
+}
+
+
+public class QueueTest {
+    public static void main(String[] args) {
+
+        Queue q = new Queue(5);
+
+        q.insert(6);
+        q.insert(23);
+        q.insert(14);
+        q.insert(5);
+        q.insert(37);
+
+        q.printQueue();
+
+        System.out.println("Dequeued: " + q.remove());
+        System.out.println("Front now: " + q.peek());
+
+        q.printQueue();
+
+        q.insert(19);
+        q.printQueue();
+    }
+}
