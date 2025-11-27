@@ -1,0 +1,125 @@
+
+public class Queue {
+    private long[] queueArray;
+    private int front;
+    private int rear;
+    private int maxSize;
+    private int nItems;
+
+public Queue(int maxSize) {
+    this.maxSize = maxSize;
+    this.queueArray = new long[maxSize];
+    this.front = 0;
+    this.rear = -1;
+    this.nItems = 0;
+}
+
+int size() {
+	return nItems;
+}
+
+boolean IsEmpty() {
+	return size()==0;	
+}
+
+boolean isFull() {
+	return size()==maxSize;
+}
+
+long peek() {
+    if (IsEmpty()) {
+        System.out.println("Queue is empty!");
+        return-1;
+    }
+    else {
+	return queueArray[front];
+    }
+  }
+    
+
+void remove() {
+	if(IsEmpty()) {
+		System.out.println("Queue is Empty!");
+	}
+	else {
+		front++;
+		nItems--;
+	}
+	
+}
+
+public void insert(long e) {
+    if (isFull()) {
+        System.out.println("Queue is full.");
+    } 
+    else {
+    	   if (rear == maxSize - 1) {
+			   for (int i= 0; i<nItems; i++ ) {
+				   queueArray[i]=queueArray[i+front];
+				   
+    	    }
+			   front=0;
+			   rear=nItems-1;
+
+    	}
+    	   
+   	    queueArray[++rear] = e;    
+   	    nItems++;
+
+    }
+    
+    }
+
+
+
+void printQueue() {
+	
+    if (IsEmpty()) {
+        System.out.println("Queue is empty.");
+    }
+    
+    else {
+	for(int i=front; i<=rear; i++) {
+		System.out.println(queueArray[i]+"");
+	}
+	System.out.println();
+    }
+}
+
+
+}
+
+public class QueueApp {
+	
+	public static void main(String[] args) {
+		Queue myQueue = new Queue(5);
+		System.out.println(myQueue.peek());
+	
+		for (int i=0; i<6; i++) {
+			
+			myQueue.insert((long)(Math.random() * 10));
+		}
+		
+		myQueue.remove();
+		myQueue.remove();
+		myQueue.remove();
+		myQueue.insert((long)(Math.random() * 10));
+		myQueue.insert((long)(Math.random() * 10));
+		myQueue.insert((long)(Math.random() * 10));
+		myQueue.insert((long)(Math.random() * 10));
+		
+		
+		myQueue.printQueue();
+		
+		for (int i = 0; i < 5; i++) {
+		    long served = myQueue.peek();
+		    System.out.print(served + " ");
+		    myQueue.remove();
+		    
+		}
+
+	
+
+	}
+
+}
