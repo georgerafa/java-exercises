@@ -1,0 +1,238 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+
+
+public class ARExample {
+
+    private ArrayList<Float> list1;
+    private ArrayList<Float> list2;
+
+    public ARExample() {
+        list1 = new ArrayList<>();
+        list2 = new ArrayList<>();
+    }
+
+    public ARExample(int n) {
+        this();
+        fill(n);  
+    }
+
+ 
+    public void fill(int n) {
+        Random rand = new Random();
+
+        list1.clear();
+        list2.clear();
+
+        for (int i = 0; i < n; i++) {
+            list1.add(rand.nextFloat() * 10); // Τυχαίοι αριθμοί από 0.0 έως 10.0
+            list2.add(rand.nextFloat() * 10);
+        }
+    }
+
+    public double vProd() {
+        // Έλεγχος αν οι λίστες έχουν το ίδιο μέγεθος
+        if (list1.size() != list2.size() || list1.isEmpty()) {
+            System.out.println("Σφάλμα: αχρηστε.");
+            return 0.0;
+        }
+
+        double sum = 0.0;
+        for (int i = 0; i < list1.size(); i++) {
+            sum += list1.get(i) * list2.get(i);
+        }
+        return sum;
+    }
+
+    public boolean vOrtho() {
+        double product = vProd();
+        return Math.abs(product) < 0.00001;
+    }
+
+
+    public static void statistics(ArrayList<Float> matrix) {
+        if (matrix == null || matrix.isEmpty()) {
+            System.out.println("Η λίστα είναι άδεια. αχρηστε");
+            return;
+        }
+
+        // Εύκολος τρόπος εύρεσης min/max με τη βιβλιοθήκη Collections
+        float min = Collections.min(matrix);
+        float max = Collections.max(matrix);
+
+        double sum = 0.0;
+        for (float val : matrix) {
+            sum += val;
+        }
+        double mean = sum / matrix.size();
+
+        System.out.println("--- Στατιστικά Λίστας ---");
+        System.out.printf("Min: %.4f%n", min);
+        System.out.printf("Max: %.4f%n", max);
+        System.out.printf("Mean: %.4f%n", mean);
+        System.out.println("-------------------------");
+    }
+
+    
+    public static void main(String[] args) {
+        System.out.println("--- Δοκιμή ARExample ---");
+
+        ARExample ex = new ARExample(5);
+
+        System.out.println("List 1: " + ex.list1);
+        System.out.println("List 2: " + ex.list2);
+
+
+        double product = ex.vProd();
+        System.out.printf("Εσωτερικό Γινόμενο (vProd): %.4f%n", product);
+
+
+        boolean orthogonal = ex.vOrtho();
+        System.out.println("Είναι κάθετα (vOrtho): " + orthogonal);
+
+
+        System.out.println("\nΣτατιστικά για List 1:");
+        statistics(ex.list1); // Κλήση της στατικής μεθόδου
+
+        System.out.println("\nΣτατιστικά για List 2:");
+        statistics(ex.list2);
+    }
+}
+
+// classes made with ai den kathomai na tis kanw monos mou
+
+public class Person {
+
+    // Μεταβλητές 
+    String firstname; 
+    String lastname;  
+    int age;         
+    String sex;       
+
+  
+    public Person() {
+        // Αφήνεται κενός ή με default τιμές
+        this.firstname = "Άγνωστο";
+        this.lastname = "Άγνωστο";
+        this.age = 0;
+        this.sex = "Άγνωστο";
+    }
+
+  
+    public Person(String name, String lastname, int age, String sex) {
+        this.firstname = name;
+        this.lastname = lastname;
+        this.age = age;
+        this.sex = sex;
+    }
+
+  
+    @Override // (Good practice να δηλώνουμε ότι είναι @Override)
+    public String toString() {
+        return "Όνομα: " + firstname + " " + lastname +
+               ", Ηλικία: " + age +
+               ", Φύλο: " + sex;
+    }
+}
+
+public class Artist extends Person { // Η Artist κληρονομεί τη Person 
+
+    // Μεταβλητές 
+    String genre;   
+    boolean solo;
+
+ 
+    public Artist() {
+        super(); 
+        this.genre = "Άγνωστο";
+        this.solo = true;
+    }
+
+ 
+    public Artist(String name, String lastname, int age, String sex, String genre, boolean solo) {
+   
+        super(name, lastname, age, sex);
+
+        // Ορίζει τα δικά του πεδία
+        this.genre = genre;
+        this.solo = solo;
+    }
+
+   
+    @Override
+    public String toString() {
+        // Παίρνουμε το String της Person (π.χ. "Όνομα: John Lennon...")
+        String personInfo = super.toString();
+
+        // Προσθέτουμε τις επιπλέον πληροφορίες του Artist
+        String artistInfo = " | Είδος: " + genre +
+                            " | Σόλο: " + (solo ? "Ναι" : "Όχι");
+
+        return personInfo + artistInfo;
+    }
+}
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class MusicDatabase {
+
+    public static void main(String[] args) {
+
+        System.out.println("--- Δημιουργία Βάσης Δεδομένων Καλλιτεχνών ---");
+
+        // Δημιουργία Καλλιτεχνών χρησιμοποιώντας τον constructor της Artist 
+        Artist artist1 = new Artist("Freddie", "Mercury", 45, "Άνδρας", "Rock", false);
+        Artist artist2 = new Artist("David", "Bowie", 69, "Άνδρας", "Glam Rock", true);
+        Artist artist3 = new Artist("Nina", "Simone", 70, "Γυναίκα", "Jazz/Soul", true);
+        Artist artist4 = new Artist("Robert", "Plant", 76, "Άνδρας", "Rock", false);
+
+
+        // 1. Χρήση ArrayList για αποθήκευση (όπως στις διαφάνειες )
+        System.out.println("\n--- Δοκιμή με ArrayList ---");
+        ArrayList<Artist> artistList = new ArrayList<>();
+
+        // Χρήση μεθόδου add() 
+        artistList.add(artist1);
+        artistList.add(artist2);
+        artistList.add(artist3);
+        artistList.add(artist4);
+
+        // Εμφάνιση όλων των καλλιτεχνών (καλεί αυτόματα την toString() για καθένα)
+        for (Artist art : artistList) {
+            System.out.println(art);
+        }
+        
+        // Χρήση μεθόδου size() 
+        System.out.println("Συνολικοί καλλιτέχνες στη λίστα: " + artistList.size());
+
+
+        // 2. Χρήση HashMap για αναζήτηση (όπως στις διαφάνειες )
+        // Αποθηκεύουμε τους καλλιτέχνες με "κλειδί" το επώνυμό τους.
+        System.out.println("\n--- Δοκιμή με HashMap ---");
+        HashMap<String, Artist> artistMap = new HashMap<>();
+
+        // Χρήση μεθόδου put() 
+        artistMap.put(artist1.lastname, artist1);
+        artistMap.put(artist2.lastname, artist2);
+        artistMap.put(artist3.lastname, artist3);
+        artistMap.put(artist4.lastname, artist4);
+
+        // Αναζήτηση ενός καλλιτέχνη με το "κλειδί" (επώνυμο)
+        // Χρήση μεθόδου get() 
+        String searchKey = "Bowie";
+        Artist foundArtist = artistMap.get(searchKey);
+
+        if (foundArtist != null) {
+            System.out.println("Βρέθηκε ο καλλιτέχνης '" + searchKey + "': " + foundArtist);
+        } else {
+            System.out.println("Δεν βρέθηκε ο καλλιτέχνης '" + searchKey + "'.");
+        }
+        
+        // Χρήση μεθόδου containsKey() 
+        System.out.println("Περιέχει το κλειδί 'Mercury'; " + artistMap.containsKey("Mercury"));
+        System.out.println("Περιέχει το κλειδί 'Lennon'; " + artistMap.containsKey("Lennon"));
+    }
+}
+
