@@ -1,0 +1,129 @@
+package CDs;
+
+public class Person {
+	String firstName;
+	String lastName;
+	int age;
+	String sex;
+	
+	Person(){
+		
+	}
+	
+	Person(String firstName, String lastName, int age, String sex){
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
+		this.sex = sex;
+	}
+	
+	public String toString() {
+		return firstName + ", " + lastName + ", " + age + ", " + sex;
+		
+	}
+	
+}
+
+package CDs;
+
+public class Artist extends Person{
+	String genre;
+	boolean solo;
+	
+	Artist(){
+		super();
+	}
+	
+	Artist(String firstName, String lastName, int age, String sex, String genre, boolean solo){
+		super(firstName, lastName, age, sex);
+		this.genre = genre;
+		this.solo = solo;
+	}
+	
+	public String toString(){
+		return super.toString() + ", " + genre + ", " + solo;
+		
+	}
+
+	
+}
+
+package CDs;
+import java.util.ArrayList;
+
+
+public class ARExample {
+	ArrayList<Float> list1;
+	ArrayList<Float> list2;
+	
+	ARExample(){
+		list1 = new ArrayList<>();
+		list2 = new ArrayList<>();
+	}
+	
+	ARExample(int n){
+		list1 = new ArrayList<>(n);
+		list2 = new ArrayList<>(n);
+	}
+	
+	float vProd() {
+		float sum = 0;
+		if(list1.size() == list2.size()) {
+			for(int i=0; i<list1.size(); i++) {
+				sum = sum + list1.get(i)*list2.get(i);
+			}
+			return sum;
+		}
+		else
+			return -1;
+	}
+	
+	boolean vOrtho() {
+		return vProd() == 0;
+	}
+	
+	void fill(int n) {
+		for(int i=0; i<n; i++) {
+			list1.add((float)(10*Math.random()));
+			list2.add((float)(10*Math.random()));
+		}
+	}
+	
+void statistics(ArrayList<Float> matrix) {
+		float max = matrix.get(0);
+		float min = matrix.get(0);
+		float mean = 0;
+		
+		for(int i=0; i<matrix.size(); i++) {
+			if(matrix.get(i) > max) {
+				max = matrix.get(i);
+			}
+		}
+		
+		for(int i=0; i<matrix.size(); i++) {
+			if(matrix.get(i) < min) {
+				min = matrix.get(i);
+			}
+		}
+		
+		float newSum = 0;
+		
+		for(int i=0; i<matrix.size(); i++) {
+			newSum = newSum + matrix.get(i);
+		}
+		
+		mean = newSum/matrix.size();
+		
+		System.out.println("Μέγιστος: " + max + ", Ελάχιστος: " + min + ", Μέσος Όρος: " + mean);
+}
+
+	public static void main(String[] args) {
+		ARExample test = new ARExample(10);
+		test.fill(10);
+		System.out.println(test.vProd());
+		System.out.println(test.vOrtho());
+		test.statistics(test.list1);
+		test.statistics(test.list2);
+	}
+
+}
